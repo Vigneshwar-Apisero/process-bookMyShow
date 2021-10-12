@@ -29,6 +29,18 @@
 				<artifactId>mule-maven-plugin</artifactId>
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
+					<configuration>
+						<cloudHubDeployment>
+						<username>vigneshwar-apisero1</username>
+						<password>Vigneshwar-apisero1</password>
+						<environment>Sandbox</environment>
+						<workers>1</workers>
+						<workerType>Micro</workerType>
+						<applicationName>process-bookMyShow</applicationName>
+						<muleVersion>4.4.0</muleVersion>
+						<objectStoreV2>true</objectStoreV2>
+					</cloudHubDeployment>
+					</configuration>
 			</plugin>
 		</plugins>
 	</build>
