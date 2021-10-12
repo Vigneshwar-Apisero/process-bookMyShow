@@ -1,0 +1,6 @@
+http:
+  port: "8081"
+  host: "localhost"
+  
+sys-movies-api:
+  host: "sys-movies-api.us-e2.cloudhub.io"
