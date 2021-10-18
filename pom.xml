@@ -65,6 +65,8 @@
 			<classifier>raml</classifier>
 			<type>zip</type>
 		</dependency> -->
+		
+		
 		<dependency>
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-apikit-module</artifactId>
