@@ -58,15 +58,6 @@
 			<version>1.2.1</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
-<!--		<dependency>
-			<groupId>11f6ead7-1cfb-4dc4-b6ef-9806272e0aa8</groupId>
-			<artifactId>movies-process-api</artifactId>
-			<version>1.0.0</version>
-			<classifier>raml</classifier>
-			<type>zip</type>
-		</dependency> -->
-		
-		
 		<dependency>
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-apikit-module</artifactId>
@@ -84,6 +75,13 @@
 			<artifactId>mule-wsc-connector</artifactId>
 			<version>1.6.5</version>
 			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>11f6ead7-1cfb-4dc4-b6ef-9806272e0aa8</groupId>
+			<artifactId>movies-process-api</artifactId>
+			<version>1.0.0</version>
+			<classifier>raml</classifier>
+			<type>zip</type>
 		</dependency>
 	</dependencies>
 
