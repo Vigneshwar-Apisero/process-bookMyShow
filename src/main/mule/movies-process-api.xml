@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
-http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
-http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
-http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
-http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd">
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd  http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd">
     <http:listener-config name="movies-process-api-httpListenerConfig">
         <http:listener-connection host="0.0.0.0" port="${http.port}" />
     </http:listener-config>
     <apikit:config name="movies-process-api-config" api="resource::11f6ead7-1cfb-4dc4-b6ef-9806272e0aa8:movies-process-api:1.0.0:raml:zip:movies-process-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
     <http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="d093b76c-a128-407f-b571-f487b20b2343">
-		<http:request-connection host="${sys-movies-api.host}"/>
-	</http:request-config>
-	<email:smtp-config name="Email_SMTP" doc:name="Email SMTP" doc:id="208deeea-6052-4606-8cd2-813088af6641" >
-		<email:smtp-connection host="smtp.gmail.com" port="587" user="vigneshwar.s.ws@apisero.com" password="oresipA_vig2k21" >
-			<email:properties >
-				<email:property key="mail.smtp.starttls.enable" value="true" />
-			</email:properties>
-		</email:smtp-connection>
-	</email:smtp-config>
-	<configuration-properties doc:name="Configuration properties" doc:id="033e1040-aaa6-4d2e-82f6-7777e320577d" file="config.yaml" />
-	<api-gateway:autodiscovery apiId="17337077" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="dd21b8e8-2bd5-4da9-a761-677f43c7d900" flowRef="movies-process-api-main" />
-	<flow name="movies-process-api-main">
+        <http:request-connection host="${sys-movies-api.host}" />
+    </http:request-config>
+    <email:smtp-config name="Email_SMTP" doc:name="Email SMTP" doc:id="208deeea-6052-4606-8cd2-813088af6641">
+        <email:smtp-connection host="smtp.gmail.com" port="587" user="vigneshwar.s.ws@apisero.com" password="oresipA_vig2k21">
+            <email:properties>
+                <email:property key="mail.smtp.starttls.enable" value="true" />
+            </email:properties>
+        </email:smtp-connection>
+    </email:smtp-config>
+    <configuration-properties doc:name="Configuration properties" doc:id="033e1040-aaa6-4d2e-82f6-7777e320577d" file="config.yaml" />
+    <api-gateway:autodiscovery apiId="17337077" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="dd21b8e8-2bd5-4da9-a761-677f43c7d900" flowRef="movies-process-api-main" />
+    <flow name="movies-process-api-main">
         <http:listener config-ref="movies-process-api-httpListenerConfig" path="/api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
                 <http:headers>#[vars.outboundHeaders default {}]</http:headers>
@@ -33,7 +29,7 @@ http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/
         <apikit:router config-ref="movies-process-api-config" />
         <error-handler>
             <on-error-propagate type="APIKIT:BAD_REQUEST">
-                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -46,7 +42,7 @@ output application/json
                 </ee:transform>
             </on-error-propagate>
             <on-error-propagate type="APIKIT:NOT_FOUND">
-                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -59,7 +55,7 @@ output application/json
                 </ee:transform>
             </on-error-propagate>
             <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
-                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -72,7 +68,7 @@ output application/json
                 </ee:transform>
             </on-error-propagate>
             <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
-                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -85,7 +81,7 @@ output application/json
                 </ee:transform>
             </on-error-propagate>
             <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
-                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -98,7 +94,7 @@ output application/json
                 </ee:transform>
             </on-error-propagate>
             <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
-                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -125,7 +121,7 @@ output application/json
         <apikit:console config-ref="movies-process-api-config" />
         <error-handler>
             <on-error-propagate type="APIKIT:NOT_FOUND">
-                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -140,16 +136,16 @@ output application/json
         </error-handler>
     </flow>
     <flow name="get:\movies:movies-process-api-config">
-		<http:request method="GET" doc:name="Request" doc:id="59c2e4bc-2442-4705-b681-1a5c7e4ba46c" config-ref="HTTP_Request_configuration" path="/api/movies">
-			<http:query-params ><![CDATA[#[output application/java
+        <http:request method="GET" doc:name="Request" doc:id="59c2e4bc-2442-4705-b681-1a5c7e4ba46c" config-ref="HTTP_Request_configuration" path="/api/movies">
+            <http:query-params><![CDATA[#[output application/java
 ---
 {
 	(showTiming : attributes.queryParams.showTiming) if (attributes.queryParams.showTiming != null),
 	(language : attributes.queryParams.language) if (attributes.queryParams.language != null),
 	(genre : attributes.queryParams.genre) if (attributes.queryParams.genre != null)
 }]]]></http:query-params>
-		</http:request>
-		<ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+        </http:request>
+        <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -158,27 +154,27 @@ payload]]></ee:set-payload>
             </ee:message>
         </ee:transform>
     </flow>
-	<flow name="get:\movies\(movieId):movies-process-api-config">
-		<http:request method="GET" doc:name="Request" doc:id="00ae7387-e9d2-4bbd-b5f3-079ccc5f70dd" config-ref="HTTP_Request_configuration" path="/api/movies/{movieId}">
-			<http:uri-params ><![CDATA[#[output application/java
+    <flow name="get:\movies\(movieId):movies-process-api-config">
+        <http:request method="GET" doc:name="Request" doc:id="00ae7387-e9d2-4bbd-b5f3-079ccc5f70dd" config-ref="HTTP_Request_configuration" path="/api/movies/{movieId}">
+            <http:uri-params><![CDATA[#[output application/java
 ---
 {
 	movieId : attributes.uriParams.movieId
 }]]]></http:uri-params>
-		</http:request>
-		<ee:transform doc:name="Transform Message" doc:id="17ef5959-0358-4b5f-89fb-12e74b4e5130" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
+        </http:request>
+        <ee:transform doc:name="Transform Message" doc:id="17ef5959-0358-4b5f-89fb-12e74b4e5130">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 payload]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
+            </ee:message>
+        </ee:transform>
     </flow>
     <flow name="post:\movies\(movieId)\bookTicket:application\json:movies-process-api-config">
-		<ee:transform doc:name="Transform Message" doc:id="2b2ec6a8-a970-43a7-b2d9-cf16bb073969" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
+        <ee:transform doc:name="Transform Message" doc:id="2b2ec6a8-a970-43a7-b2d9-cf16bb073969">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {
@@ -186,10 +182,10 @@ output application/json
 	numberOfSeats : payload.numberOfSeats as Number,
 	showTiming : payload.showTiming
 }]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
-		<flow-ref doc:name="Flow Reference" doc:id="39d25ad2-552a-4961-b972-ffa8cb7ff51f" name="get:\movies\(movieId):movies-process-api-config" target="movieDetails"/>
-		<ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" doc:id="fd1b4b59-4485-40d2-a58b-61693939d33a">
+            </ee:message>
+        </ee:transform>
+        <flow-ref doc:name="Flow Reference" doc:id="39d25ad2-552a-4961-b972-ffa8cb7ff51f" name="get:\movies\(movieId):movies-process-api-config" target="movieDetails" />
+        <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" doc:id="fd1b4b59-4485-40d2-a58b-61693939d33a">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 import * from dw::core::Strings
@@ -209,18 +205,18 @@ var discount = if(payload.numberOfSeats>3) totalAmount*0.25 else 0
         </ee:transform>
     </flow>
     <flow name="post:\movies\(movieId)\bookTicket\payment:application\json:movies-process-api-config">
-		<ee:transform doc:name="Transform Message" doc:id="688830a7-1d7d-4140-94c5-ea49b7f789fd" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
+        <ee:transform doc:name="Transform Message" doc:id="688830a7-1d7d-4140-94c5-ea49b7f789fd">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {
 	payableAmount : payload.payableAmount,
 	paymentMethod : payload.paymentMethod
 }]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
-		<ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+            </ee:message>
+        </ee:transform>
+        <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -229,10 +225,11 @@ output application/json
             </ee:message>
         </ee:transform>
     </flow>
-	<flow name="get:\eTicket:application\json:movies-process-api-config">
-		<ee:transform doc:name="Transform Message" doc:id="f742e183-f04f-481c-b370-a90dde1bdaf8" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
+    <flow name="get:\eTicket:application\json:movies-process-api-config">
+        <http:listener doc:name="Listener" doc:id="a31fa272-37b3-484c-9d9c-70d2a1b4f64a" config-ref="movies-process-api-httpListenerConfig" path="/eTicket"/>
+		<ee:transform doc:name="Transform Message" doc:id="f742e183-f04f-481c-b370-a90dde1bdaf8">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {
@@ -241,17 +238,17 @@ output application/json
   "numberOfSeats": payload.numberOfSeats,
   "email": payload.email
 }]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
-		<set-variable value="#[payload]" doc:name="Set Variable" doc:id="cf712d66-874e-45bc-8c21-e226a9b26d53" variableName="eTicketInput"/>
-		<http:request method="GET" doc:name="Request" doc:id="4b516eb5-d720-4668-8327-b1cc26961aaf" config-ref="HTTP_Request_configuration" path="/api/movies/{movieId}">
-			<http:uri-params ><![CDATA[#[output application/java
+            </ee:message>
+        </ee:transform>
+        <set-variable value="#[payload]" doc:name="Set Variable" doc:id="cf712d66-874e-45bc-8c21-e226a9b26d53" variableName="eTicketInput" />
+        <http:request method="GET" doc:name="Request" doc:id="4b516eb5-d720-4668-8327-b1cc26961aaf" config-ref="HTTP_Request_configuration" path="/api/movies/{movieId}">
+            <http:uri-params><![CDATA[#[output application/java
 ---
 {
 	movieId : payload.movieId
 }]]]></http:uri-params>
-		</http:request>
-		<ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+        </http:request>
+        <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -267,12 +264,12 @@ var seats = flatten(1 to vars.eTicketInput.numberOfSeats map(value,index) -> [fi
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>
-		<email:send doc:id="9e52d60d-e479-48fd-847e-4d5a23bf73a5" config-ref="Email_SMTP" fromAddress="vigneshwar.s.ws@apisero.com" subject="eTicket | PVR Cinemas">
-			<email:to-addresses >
-				<email:to-address value="#[vars.eTicketInput.email]" />
-			</email:to-addresses>
-			<email:cc-addresses />
-			<email:bcc-addresses />
-		</email:send>
+        <email:send doc:id="9e52d60d-e479-48fd-847e-4d5a23bf73a5" config-ref="Email_SMTP" fromAddress="vigneshwar.s.ws@apisero.com" subject="eTicket | PVR Cinemas">
+            <email:to-addresses>
+                <email:to-address value="#[vars.eTicketInput.email]" />
+            </email:to-addresses>
+            <email:cc-addresses />
+            <email:bcc-addresses />
+        </email:send>
     </flow>
 </mule>
