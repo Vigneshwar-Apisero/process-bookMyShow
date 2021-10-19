@@ -1,3 +1,5 @@
+def mvnHome = tool 'M3'
+
 pipeline {
 
   agent any
