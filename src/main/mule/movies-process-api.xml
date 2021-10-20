@@ -4,8 +4,8 @@
         <http:listener-connection host="0.0.0.0" port="${http.port}" />
     </http:listener-config>
     <apikit:config name="movies-process-api-config" api="resource::11f6ead7-1cfb-4dc4-b6ef-9806272e0aa8:movies-process-api:1.0.0:raml:zip:movies-process-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
-    <http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="d093b76c-a128-407f-b571-f487b20b2343">
-        <http:request-connection host="${sys-movies-api.host}" />
+    <http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="d093b76c-a128-407f-b571-f487b20b2343" responseTimeout="900000">
+        <http:request-connection host="${sys-movies-api.host}" connectionIdleTimeout="90000"/>
     </http:request-config>
     <email:smtp-config name="Email_SMTP" doc:name="Email SMTP" doc:id="208deeea-6052-4606-8cd2-813088af6641">
         <email:smtp-connection host="smtp.gmail.com" port="587" user="vigneshwar.s.ws@apisero.com" password="oresipA_vig2k21">
@@ -136,7 +136,8 @@ output application/json
         </error-handler>
     </flow>
     <flow name="get:\movies:movies-process-api-config">
-        <http:request method="GET" doc:name="Request" doc:id="59c2e4bc-2442-4705-b681-1a5c7e4ba46c" config-ref="HTTP_Request_configuration" path="/api/movies">
+        <http:listener doc:name="Listener" doc:id="df85c3eb-2f93-4776-9e00-3db901a097f3" config-ref="movies-process-api-httpListenerConfig" path="/movies"/>
+		<http:request method="GET" doc:name="Request" doc:id="59c2e4bc-2442-4705-b681-1a5c7e4ba46c" config-ref="HTTP_Request_configuration" path="/api/movies">
             <http:query-params><![CDATA[#[output application/java
 ---
 {
@@ -155,7 +156,8 @@ payload]]></ee:set-payload>
         </ee:transform>
     </flow>
     <flow name="get:\movies\(movieId):movies-process-api-config">
-        <http:request method="GET" doc:name="Request" doc:id="00ae7387-e9d2-4bbd-b5f3-079ccc5f70dd" config-ref="HTTP_Request_configuration" path="/api/movies/{movieId}">
+        <http:listener doc:name="Listener" doc:id="2d2f5581-cbc9-40bc-a546-7954fde3b43f" config-ref="movies-process-api-httpListenerConfig" path="/movies/{movieId}" />
+		<http:request method="GET" doc:name="Request" doc:id="00ae7387-e9d2-4bbd-b5f3-079ccc5f70dd" config-ref="HTTP_Request_configuration" path="/api/movies/{movieId}">
             <http:uri-params><![CDATA[#[output application/java
 ---
 {
@@ -172,7 +174,7 @@ payload]]></ee:set-payload>
         </ee:transform>
     </flow>
     <flow name="post:\movies\(movieId)\bookTicket:application\json:movies-process-api-config">
-        <ee:transform doc:name="Transform Message" doc:id="2b2ec6a8-a970-43a7-b2d9-cf16bb073969">
+		<ee:transform doc:name="Transform Message" doc:id="2b2ec6a8-a970-43a7-b2d9-cf16bb073969">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json
