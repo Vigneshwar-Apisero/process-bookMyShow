@@ -34,7 +34,7 @@
 						<username>vigneshwar-apisero1</username>
 						<password>Vigneshwar-apisero1</password>
 						<environment>Sandbox</environment>
-						<!-- <workers>1</workers>-->
+						<workers>1</workers>
 						<businessGroup>Apisero</businessGroup>
 						<workerType>Micro</workerType>
 						<applicationName>process-bookMyShow-vignesh</applicationName>
@@ -78,13 +78,13 @@
 			<version>1.6.5</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
-		<!-- 		<dependency>
+ 		<dependency>
 			<groupId>11f6ead7-1cfb-4dc4-b6ef-9806272e0aa8</groupId>
 			<artifactId>movies-process-api</artifactId>
 			<version>1.0.0</version>
 			<classifier>raml</classifier>
 			<type>zip</type>
-		</dependency>-->
+		</dependency>
 		<dependency>
 			<groupId>11f6ead7-1cfb-4dc4-b6ef-9806272e0aa8</groupId>
 			<artifactId>movies-process-api</artifactId>
