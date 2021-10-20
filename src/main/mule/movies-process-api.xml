@@ -136,9 +136,15 @@ output application/json
         </error-handler>
     </flow>
     <flow name="get:\movies:movies-process-api-config">
-        <http:listener doc:name="Listener" doc:id="df85c3eb-2f93-4776-9e00-3db901a097f3" config-ref="movies-process-api-httpListenerConfig" path="/movies"/>
+		<http:listener doc:name="Listener" doc:id="76b99419-55cb-436c-810a-4327dfcc3304" config-ref="movies-process-api-httpListenerConfig" path="/movies"/>
 		<http:request method="GET" doc:name="Request" doc:id="59c2e4bc-2442-4705-b681-1a5c7e4ba46c" config-ref="HTTP_Request_configuration" path="/api/movies">
-            <http:query-params><![CDATA[#[output application/java
+            <http:headers ><![CDATA[#[output application/java
+---
+{
+	client_secret : 'A1107fd7576542ad81DeD0D3eD39D54F',
+	client_id : 'fb259d2a3e29492d89e16bdac0d79431'
+}]]]></http:headers>
+			<http:query-params><![CDATA[#[output application/java
 ---
 {
 	(showTiming : attributes.queryParams.showTiming) if (attributes.queryParams.showTiming != null),
@@ -146,7 +152,7 @@ output application/json
 	(genre : attributes.queryParams.genre) if (attributes.queryParams.genre != null)
 }]]]></http:query-params>
         </http:request>
-        <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+        <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" doc:id="08541947-2576-4fbe-a049-dc3642b156e9">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -156,9 +162,15 @@ payload]]></ee:set-payload>
         </ee:transform>
     </flow>
     <flow name="get:\movies\(movieId):movies-process-api-config">
-        <http:listener doc:name="Listener" doc:id="2d2f5581-cbc9-40bc-a546-7954fde3b43f" config-ref="movies-process-api-httpListenerConfig" path="/movies/{movieId}" />
+		<http:listener doc:name="Listener" doc:id="da55b1a5-981b-48be-94d6-80e1808cfcc8" config-ref="movies-process-api-httpListenerConfig" path="/movies/{movieId}"/>
 		<http:request method="GET" doc:name="Request" doc:id="00ae7387-e9d2-4bbd-b5f3-079ccc5f70dd" config-ref="HTTP_Request_configuration" path="/api/movies/{movieId}">
-            <http:uri-params><![CDATA[#[output application/java
+            <http:headers ><![CDATA[#[output application/java
+---
+{
+	client_secret : 'A1107fd7576542ad81DeD0D3eD39D54F',
+	client_id : 'fb259d2a3e29492d89e16bdac0d79431'
+}]]]></http:headers>
+			<http:uri-params><![CDATA[#[output application/java
 ---
 {
 	movieId : attributes.uriParams.movieId
@@ -174,6 +186,7 @@ payload]]></ee:set-payload>
         </ee:transform>
     </flow>
     <flow name="post:\movies\(movieId)\bookTicket:application\json:movies-process-api-config">
+		<http:listener doc:name="Listener" doc:id="b277f41e-4cce-4d79-a12b-202de4e6edcb" config-ref="movies-process-api-httpListenerConfig" path="/movies/{movieId}/bookTicket"/>
 		<ee:transform doc:name="Transform Message" doc:id="2b2ec6a8-a970-43a7-b2d9-cf16bb073969">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
@@ -207,7 +220,8 @@ var discount = if(payload.numberOfSeats>3) totalAmount*0.25 else 0
         </ee:transform>
     </flow>
     <flow name="post:\movies\(movieId)\bookTicket\payment:application\json:movies-process-api-config">
-        <ee:transform doc:name="Transform Message" doc:id="688830a7-1d7d-4140-94c5-ea49b7f789fd">
+        <http:listener doc:name="Listener" doc:id="87ccbf0a-b691-44d8-a02c-1876e498d22b" config-ref="movies-process-api-httpListenerConfig" path="/movies/{movieId}/bookTicket/payment"/>
+		<ee:transform doc:name="Transform Message" doc:id="688830a7-1d7d-4140-94c5-ea49b7f789fd">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -218,7 +232,7 @@ output application/json
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>
-        <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+        <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" doc:id="fa93a791-21e5-461a-b5b0-fc818b2e22e5">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -244,13 +258,19 @@ output application/json
         </ee:transform>
         <set-variable value="#[payload]" doc:name="Set Variable" doc:id="cf712d66-874e-45bc-8c21-e226a9b26d53" variableName="eTicketInput" />
         <http:request method="GET" doc:name="Request" doc:id="4b516eb5-d720-4668-8327-b1cc26961aaf" config-ref="HTTP_Request_configuration" path="/api/movies/{movieId}">
-            <http:uri-params><![CDATA[#[output application/java
+            <http:headers ><![CDATA[#[output application/java
+---
+{
+	client_secret : 'A1107fd7576542ad81DeD0D3eD39D54F',
+	client_id : 'fb259d2a3e29492d89e16bdac0d79431'
+}]]]></http:headers>
+			<http:uri-params><![CDATA[#[output application/java
 ---
 {
 	movieId : payload.movieId
 }]]]></http:uri-params>
         </http:request>
-        <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+        <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" doc:id="20dfb57b-b1f9-468b-b774-459bc1907b5e">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json

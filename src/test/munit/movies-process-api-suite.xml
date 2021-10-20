@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="movies-process-api-suite.xml" />
+	<munit:test name="get:\movies:movies-process-api-config-test" doc:id="05b2c1b1-9c20-4fbf-996d-34af2b25c448" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Request" doc:id="b5820a30-63ab-4428-9dbc-e1a885dca969" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="59c2e4bc-2442-4705-b681-1a5c7e4ba46c" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://getmoviesmoviesprocessapiconfigtest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					<munit-tools:attributes value="#[readUrl('classpath://getmoviesmoviesprocessapiconfigtest\mock_attributes.dwl')]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit-tools:spy doc:name="Spy Transform Message" doc:id="64ee8893-d4fb-4570-998c-e661d07d26d2" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="08541947-2576-4fbe-a049-dc3642b156e9" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="d1ddce29-1844-4d3b-a931-17505fdeb5a1" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import getmoviesmoviesprocessapiconfigtest::spy_assert_payload
+---
+spy_assert_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="1e6abe30-21f2-4153-b8d4-489a851f3564" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import getmoviesmoviesprocessapiconfigtest::spy_assert_payload1
+---
+spy_assert_payload1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+			<munit:set-event doc:name="Set Input" doc:id="ea43144f-dc91-4e23-9bb7-ca95a2ec7ed1" >
+				<munit:payload value="#[readUrl('classpath://getmoviesmoviesprocessapiconfigtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getmoviesmoviesprocessapiconfigtest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\movies:movies-process-api-config" doc:id="d34efbed-478f-43bf-9037-182759014fd6" name="get:\movies:movies-process-api-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="e7740315-719f-4598-9399-5509ad38f29a" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import getmoviesmoviesprocessapiconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="ed2ffbce-45c4-43f3-92fe-3242c79a5097" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="08541947-2576-4fbe-a049-dc3642b156e9" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="get:\movies\(movieId):movies-process-api-config-test" doc:id="208c557f-8908-43da-86a1-3120080ef3f9" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Request" doc:id="4f91c10a-0804-4ea3-9797-2f01fc5cd9d2" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="00ae7387-e9d2-4bbd-b5f3-079ccc5f70dd" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://getmoviesmovieIdmoviesprocessapiconfigtest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					<munit-tools:attributes value="#[readUrl('classpath://getmoviesmovieIdmoviesprocessapiconfigtest\mock_attributes.dwl')]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit-tools:spy doc:name="Spy Transform Message" doc:id="d6245cab-ed2d-4f4c-8cff-202bbc52f82b" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="17ef5959-0358-4b5f-89fb-12e74b4e5130" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="b3e2aca3-0255-459d-a21d-ccd3954a22e7" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import getmoviesmovieIdmoviesprocessapiconfigtest::spy_assert_payload
+---
+spy_assert_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="d1c164b4-a0e1-432a-8655-ceb9578a326e" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import getmoviesmovieIdmoviesprocessapiconfigtest::spy_assert_payload1
+---
+spy_assert_payload1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+			<munit:set-event doc:name="Set Input" doc:id="e67c4300-3744-46d7-bab6-ce718dc4edff" >
+				<munit:payload value="#[readUrl('classpath://getmoviesmovieIdmoviesprocessapiconfigtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getmoviesmovieIdmoviesprocessapiconfigtest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\movies\(movieId):movies-process-api-config" doc:id="79991b9a-616d-499b-bdfc-7608475b8c4d" name="get:\movies\(movieId):movies-process-api-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="0eec0434-5a17-47e1-a9ca-435a1e3d24fe" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import getmoviesmovieIdmoviesprocessapiconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="c9d5d73a-5a58-4040-ba20-ce8a15741804" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="17ef5959-0358-4b5f-89fb-12e74b4e5130" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="post:\movies\(movieId)\bookTicket:application\json:movies-process-api-config-test" doc:id="44b88d22-bc97-449d-977e-4e783e3737d9" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Flow Reference" doc:id="d462c26b-a92f-450d-aabd-797ec33e284a" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="39d25ad2-552a-4961-b972-ffa8cb7ff51f" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://postmoviesmovieIdbookTicketapplicationjsonmoviesprocessapiconfigtest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					<munit-tools:attributes value="#[readUrl('classpath://postmoviesmovieIdbookTicketapplicationjsonmoviesprocessapiconfigtest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="movieDetails" value="#[output application/json --- readUrl('classpath://postmoviesmovieIdbookTicketapplicationjsonmoviesprocessapiconfigtest\mock_variable_.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit-tools:spy doc:name="Spy Transform Message" doc:id="e3b2feae-0a5e-45d9-b129-78faf69e6218" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="2b2ec6a8-a970-43a7-b2d9-cf16bb073969" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="bd30c8ed-733e-4033-b8c4-827673052caa" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import postmoviesmovieIdbookTicketapplicationjsonmoviesprocessapiconfigtest::spy_assert_payload
+---
+spy_assert_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="2dd1e3fe-9ab6-45a3-9d15-529cd69e706e" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import postmoviesmovieIdbookTicketapplicationjsonmoviesprocessapiconfigtest::spy_assert_payload1
+---
+spy_assert_payload1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+			<munit-tools:spy doc:name="Spy Transform Message" doc:id="7e1ef832-706b-4a10-ad09-1cc921910db3" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="fd1b4b59-4485-40d2-a58b-61693939d33a" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="e5d4c0e7-4ff8-4dd1-a307-faffe2024fee" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import postmoviesmovieIdbookTicketapplicationjsonmoviesprocessapiconfigtest::spy_assert_payload2
+---
+spy_assert_payload2::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="30040a61-3a65-488a-83ad-d47b927ff73e" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import postmoviesmovieIdbookTicketapplicationjsonmoviesprocessapiconfigtest::spy_assert_payload3
+---
+spy_assert_payload3::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+			<munit:set-event doc:name="Set Input" doc:id="49f49284-722a-46c6-8769-4a2cbec7574b" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://postmoviesmovieIdbookTicketapplicationjsonmoviesprocessapiconfigtest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+				<munit:attributes value="#[readUrl('classpath://postmoviesmovieIdbookTicketapplicationjsonmoviesprocessapiconfigtest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to post:\movies\(movieId)\bookTicket:application\json:movies-process-api-config" doc:id="dcdcc5bc-f617-4282-95d1-36c11dc791d0" name="post:\movies\(movieId)\bookTicket:application\json:movies-process-api-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="a31a42cd-eef1-419c-956b-52cd6ad02864" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import postmoviesmovieIdbookTicketapplicationjsonmoviesprocessapiconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="d66cf513-b8a2-47ac-833b-3ce94ab4a299" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="2b2ec6a8-a970-43a7-b2d9-cf16bb073969" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="cc57fdbc-67bc-4090-9609-1fc5fe154a0c" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="fd1b4b59-4485-40d2-a58b-61693939d33a" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="post:\movies\(movieId)\bookTicket\payment:application\json:movies-process-api-config-test" doc:id="a2636ba8-63e3-4ff4-9360-1e6949dfb84c" >
+		<munit:behavior >
+			<munit-tools:spy doc:name="Spy Transform Message" doc:id="949cc14c-6566-4338-bb0a-0c6aaa994867" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="688830a7-1d7d-4140-94c5-ea49b7f789fd" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="33005514-7dc4-4253-8e15-fe72e1b9d7e5" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import postmoviesmovieIdbookTicketpaymentapplicationjsonmoviesprocessapiconfigtest::spy_assert_payload
+---
+spy_assert_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="1a3f5f25-f039-4dd6-aa4e-38f5fbb83bab" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import postmoviesmovieIdbookTicketpaymentapplicationjsonmoviesprocessapiconfigtest::spy_assert_payload1
+---
+spy_assert_payload1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+			<munit-tools:spy doc:name="Spy Transform Message" doc:id="97c90911-6cfd-455e-b8ba-bac4997023af" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="fa93a791-21e5-461a-b5b0-fc818b2e22e5" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="ae2287cb-52e0-4580-9cd5-190a41cb7a4c" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import postmoviesmovieIdbookTicketpaymentapplicationjsonmoviesprocessapiconfigtest::spy_assert_payload2
+---
+spy_assert_payload2::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="a4de0e58-a65c-4021-ae26-f03d29192ae2" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import postmoviesmovieIdbookTicketpaymentapplicationjsonmoviesprocessapiconfigtest::spy_assert_payload3
+---
+spy_assert_payload3::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+			<munit:set-event doc:name="Set Input" doc:id="d1f537cc-3d2c-4a08-888f-42ed18101f84" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://postmoviesmovieIdbookTicketpaymentapplicationjsonmoviesprocessapiconfigtest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+				<munit:attributes value="#[readUrl('classpath://postmoviesmovieIdbookTicketpaymentapplicationjsonmoviesprocessapiconfigtest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to post:\movies\(movieId)\bookTicket\payment:application\json:movies-process-api-config" doc:id="20cd2bdf-5e95-401f-8dd1-fdfd7b8834d8" name="post:\movies\(movieId)\bookTicket\payment:application\json:movies-process-api-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="78266479-fa41-42a8-940f-604300b6bca0" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import postmoviesmovieIdbookTicketpaymentapplicationjsonmoviesprocessapiconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="91ee803c-ed3d-4a3e-83f2-74ea90f83668" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="688830a7-1d7d-4140-94c5-ea49b7f789fd" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="12fd9c83-a58e-4a03-963c-7cc784a605f0" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="fa93a791-21e5-461a-b5b0-fc818b2e22e5" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="get:\eTicket:application\json:movies-process-api-config-test" doc:id="0e22523d-4216-42b1-8b5a-415517160a0b" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Request" doc:id="dc32bb27-0a4e-4f4e-b0ba-8d55cfca4db6" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="4b516eb5-d720-4668-8327-b1cc26961aaf" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://geteTicketapplicationjsonmoviesprocessapiconfigtest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					<munit-tools:attributes value="#[readUrl('classpath://geteTicketapplicationjsonmoviesprocessapiconfigtest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="eTicketInput" value="#[output application/json --- readUrl('classpath://geteTicketapplicationjsonmoviesprocessapiconfigtest\mock_variable_.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit-tools:spy doc:name="Spy Transform Message" doc:id="109a2dde-8de2-44cb-b0f6-2ff007383581" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="20dfb57b-b1f9-468b-b774-459bc1907b5e" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="dea7a46e-0794-44b6-a9fc-8f08d01f5f86" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import geteTicketapplicationjsonmoviesprocessapiconfigtest::spy_assert_payload
+---
+spy_assert_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="ce57e345-6c17-4bbe-99b0-9193bd3caf72" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import geteTicketapplicationjsonmoviesprocessapiconfigtest::spy_assert_payload1
+---
+spy_assert_payload1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+			<munit-tools:spy doc:name="Spy Transform Message" doc:id="5e9683d7-13a1-40a6-b36d-a0116c7c418b" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="f742e183-f04f-481c-b370-a90dde1bdaf8" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="f047f478-24a9-4a5e-82e7-c1430809a4f1" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import geteTicketapplicationjsonmoviesprocessapiconfigtest::spy_assert_payload2
+---
+spy_assert_payload2::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="6c6af1c0-fe90-4760-8072-332b0224107a" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import geteTicketapplicationjsonmoviesprocessapiconfigtest::spy_assert_payload3
+---
+spy_assert_payload3::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+			<munit:set-event doc:name="Set Input" doc:id="b119e4e9-3fca-4f96-92ee-5d6bbc06865c" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://geteTicketapplicationjsonmoviesprocessapiconfigtest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+				<munit:attributes value="#[readUrl('classpath://geteTicketapplicationjsonmoviesprocessapiconfigtest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\eTicket:application\json:movies-process-api-config" doc:id="ebc2c3fe-47f5-426a-a45a-71af07d8790c" name="get:\eTicket:application\json:movies-process-api-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="15eec41f-4c41-425d-a342-5dc624585fd0" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import geteTicketapplicationjsonmoviesprocessapiconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Send" doc:id="a691d5c3-6ca1-47a1-9389-b3334e6d81e1" processor="email:send" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="9e52d60d-e479-48fd-847e-4d5a23bf73a5" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Set Variable" doc:id="905f8a8a-a538-44f2-9577-64de6d66ae83" processor="set-variable" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="cf712d66-874e-45bc-8c21-e226a9b26d53" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="08b9feff-e803-4588-a13b-3967a4cf5ebe" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="20dfb57b-b1f9-468b-b774-459bc1907b5e" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="f57a858f-fac4-4744-abd8-e530ff8009ae" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="f742e183-f04f-481c-b370-a90dde1bdaf8" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

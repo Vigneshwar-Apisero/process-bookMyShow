@@ -1,0 +1,30 @@
+{
+  "headers": {
+    "client_id": "41761f75a2fd4df08e61273e880918dd",
+    "client_secret": "21D69108dC7D4d1F830E4F32d7c54cF4",
+    "content-type": "application/json",
+    "user-agent": "PostmanRuntime/7.28.4",
+    "accept": "*/*",
+    "postman-token": "6c5f6250-fbe2-4806-a8f5-74b7b955f2a1",
+    "host": "localhost:8081",
+    "accept-encoding": "gzip, deflate, br",
+    "connection": "keep-alive",
+    "content-length": "122"
+  },
+  "clientCertificate": null,
+  "method": "GET",
+  "scheme": "http",
+  "queryParams": {},
+  "requestUri": "/eTicket",
+  "queryString": "",
+  "version": "HTTP/1.1",
+  "maskedRequestPath": null,
+  "listenerPath": "/eTicket",
+  "relativePath": "/eTicket",
+  "localAddress": "/127.0.0.1:8081",
+  "uriParams": {},
+  "rawRequestUri": "/eTicket",
+  "rawRequestPath": "/eTicket",
+  "remoteAddress": "/127.0.0.1:59787",
+  "requestPath": "/eTicket"
+}
